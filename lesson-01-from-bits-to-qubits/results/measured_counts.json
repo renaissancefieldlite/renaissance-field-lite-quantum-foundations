@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "lesson": "01 - From Bits to Qubits",
+  "simulator": "Qiskit StatevectorSampler",
+  "shots_per_circuit": 1000,
+  "seed": 67,
+  "runtime_versions": {
+    "python": "3.14.6",
+    "qiskit": "2.6.1",
+    "matplotlib": "3.11.2"
+  },
+  "counts": {
+    "definite_zero": {
+      "0": 1000,
+      "1": 0
+    },
+    "definite_one": {
+      "0": 0,
+      "1": 1000
+    },
+    "equal_superposition": {
+      "0": 507,
+      "1": 493
+    }
+  }
+}

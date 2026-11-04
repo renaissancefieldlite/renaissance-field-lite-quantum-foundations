@@ -1,0 +1,331 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.527
+Welcome to Renaissance Field Lite's Introduction to Quantum
+
+00:00:03.527 --> 00:00:07.837
+Computing, a twelve-lesson Codex 67 series built around real code,
+
+00:00:07.837 --> 00:00:11.364
+measured outputs, and one verified concept at a time.
+
+00:00:11.364 --> 00:00:16.066
+In Lesson One, we move from classical bits to measured qubits by
+
+00:00:16.066 --> 00:00:20.376
+comparing three states: a definite zero, a definite one, and an
+
+00:00:20.376 --> 00:00:21.160
+equal superposition.
+
+00:00:21.540 --> 00:00:25.733
+The goal is to predict each result, run every circuit for one
+
+00:00:25.733 --> 00:00:29.577
+thousand shots in a local Qiskit simulator, and then verify the
+
+00:00:29.577 --> 00:00:32.722
+difference between certainty and probability with both raw counts
+
+00:00:32.722 --> 00:00:34.119
+and a visual comparison.
+
+00:00:34.499 --> 00:00:38.313
+A classical bit is always read as either zero or one.
+
+00:00:38.313 --> 00:00:42.820
+A qubit can also be measured as zero or one, but before measurement
+
+00:00:42.820 --> 00:00:45.594
+its state can be prepared with quantum gates.
+
+00:00:45.594 --> 00:00:48.714
+The measurement statistics tell us how that preparation behaves.
+
+00:00:49.094 --> 00:00:51.421
+One measurement gives one classical answer.
+
+00:00:51.421 --> 00:00:55.687
+To learn the distribution, we repeat the same circuit many times.
+
+00:00:55.687 --> 00:00:58.014
+Each repetition is called a shot.
+
+00:00:58.014 --> 00:01:01.116
+Here, every experiment uses exactly one thousand shots.
+
+00:01:01.496 --> 00:01:05.442
+The demonstration is a small Python file opened in Visual Studio
+
+00:01:05.442 --> 00:01:09.388
+Code. It uses Qiskit Quantum Circuit and the Statevector Sampler, so
+
+00:01:09.388 --> 00:01:13.334
+the entire lesson runs locally without sending a job to quantum
+
+00:01:13.334 --> 00:01:13.693
+hardware.
+
+00:01:14.073 --> 00:01:18.571
+Near the top of the file, shots is set to one thousand and the
+
+00:01:18.571 --> 00:01:20.820
+simulator seed is set to sixty-seven.
+
+00:01:20.820 --> 00:01:24.355
+The fixed seed makes this teaching run reproducible, while the shot
+
+00:01:24.355 --> 00:01:26.604
+count keeps all three experiments directly comparable.
+
+00:01:26.984 --> 00:01:29.282
+The helper function creates a one-qubit circuit.
+
+00:01:29.282 --> 00:01:33.878
+It adds an X gate only when the gate name is X, adds a Hadamard gate
+
+00:01:33.878 --> 00:01:37.037
+only when the name is H, and then measures the qubit.
+
+00:01:37.417 --> 00:01:40.643
+The experiment list calls that same helper three times.
+
+00:01:40.643 --> 00:01:45.302
+The identity label adds no gate, X prepares the one state, and H
+
+00:01:45.302 --> 00:01:46.735
+prepares an equal superposition.
+
+00:01:46.735 --> 00:01:50.319
+This keeps the circuit structure consistent while changing only the
+
+00:01:50.319 --> 00:01:51.036
+preparation step.
+
+00:01:51.416 --> 00:01:56.308
+First is the baseline. A newly created qubit starts in ket zero, and
+
+00:01:56.308 --> 00:01:58.566
+no gate changes it before measurement.
+
+00:01:58.566 --> 00:02:01.953
+My prediction is complete certainty: all one thousand measurements
+
+00:02:01.953 --> 00:02:03.082
+should return zero.
+
+00:02:03.462 --> 00:02:07.528
+Second, the X gate flips the computational basis state from zero to
+
+00:02:07.528 --> 00:02:11.255
+one. My prediction is again complete certainty, but in the opposite
+
+00:02:11.255 --> 00:02:13.965
+direction: all one thousand measurements should return one.
+
+00:02:14.345 --> 00:02:18.452
+Third, the Hadamard gate transforms the starting zero state into an
+
+00:02:18.452 --> 00:02:20.692
+equal superposition of zero and one.
+
+00:02:20.692 --> 00:02:24.799
+I predict a distribution close to fifty-fifty, not a guaranteed
+
+00:02:24.799 --> 00:02:27.039
+exact split in every finite sample.
+
+00:02:27.419 --> 00:02:30.285
+The Statevector Sampler receives all three measured circuits
+
+00:02:30.285 --> 00:02:34.583
+together. It executes each one for the same one thousand shots, and
+
+00:02:34.583 --> 00:02:38.880
+the program collects the resulting counts in the same order as the
+
+00:02:38.880 --> 00:02:39.597
+experiment list.
+
+00:02:39.977 --> 00:02:43.736
+Now I will run the prepared lesson from the integrated terminal at
+
+00:02:43.736 --> 00:02:45.615
+the bottom of Visual Studio Code.
+
+00:02:45.615 --> 00:02:48.748
+The runner adds clear result headings while preserving the original
+
+00:02:48.748 --> 00:02:50.314
+circuit diagrams and measurement counts.
+
+00:02:50.694 --> 00:02:54.687
+Result one is definite zero. The circuit contains only measurement,
+
+00:02:54.687 --> 00:02:58.679
+and the terminal reports one thousand zeros with no ones.
+
+00:02:58.679 --> 00:03:01.075
+That exactly matches the baseline prediction.
+
+00:03:01.455 --> 00:03:05.908
+Result two is definite one. The circuit diagram shows the X gate
+
+00:03:05.908 --> 00:03:09.620
+before measurement, and the terminal reports one thousand ones with
+
+00:03:09.620 --> 00:03:12.589
+no zeros. That exactly matches the second prediction.
+
+00:03:12.969 --> 00:03:14.712
+Result three is equal superposition.
+
+00:03:14.712 --> 00:03:18.197
+The Hadamard circuit returns five hundred seven zeros and four
+
+00:03:18.197 --> 00:03:22.031
+hundred ninety-three ones. The total is one thousand, and the
+
+00:03:22.031 --> 00:03:25.517
+difference is small enough to show the expected near-even
+
+00:03:25.517 --> 00:03:25.866
+distribution.
+
+00:03:26.246 --> 00:03:30.048
+The superposition result is not exactly five hundred and five
+
+00:03:30.048 --> 00:03:32.709
+hundred because finite sampling includes ordinary statistical
+
+00:03:32.709 --> 00:03:36.131
+variation. A different unseeded run would usually produce slightly
+
+00:03:36.131 --> 00:03:39.553
+different counts while preserving the same overall fifty-fifty
+
+00:03:39.553 --> 00:03:39.933
+pattern.
+
+00:03:40.313 --> 00:03:45.254
+This does not mean the qubit is measured as half of each value in
+
+00:03:45.254 --> 00:03:48.784
+one shot. Every individual shot still returns one classical bit.
+
+00:03:48.784 --> 00:03:51.961
+The quantum behavior appears in the distribution collected across
+
+00:03:51.961 --> 00:03:53.372
+repeated preparations and measurements.
+
+00:03:53.752 --> 00:03:56.165
+The comparison chart makes the distinction visible.
+
+00:03:56.165 --> 00:03:59.268
+Definite zero has all of its weight on zero.
+
+00:03:59.268 --> 00:04:02.370
+Definite one has all of its weight on one.
+
+00:04:02.370 --> 00:04:05.127
+Equal superposition divides its measured outcomes almost evenly
+
+00:04:05.127 --> 00:04:06.162
+across both values.
+
+00:04:06.542 --> 00:04:10.095
+The first two circuits demonstrate deterministic measurement in the
+
+00:04:10.095 --> 00:04:12.858
+computational basis. The Hadamard circuit demonstrates probabilistic
+
+00:04:12.858 --> 00:04:15.227
+measurement after a different state preparation.
+
+00:04:15.227 --> 00:04:19.965
+The code path is nearly identical, but the gate changes the observed
+
+00:04:19.965 --> 00:04:20.360
+distribution.
+
+00:04:20.740 --> 00:04:23.025
+I verify the lesson in three ways.
+
+00:04:23.025 --> 00:04:26.617
+The counts total one thousand for every circuit, the definite-state
+
+00:04:26.617 --> 00:04:29.229
+outputs exactly match their predictions, and the superposition
+
+00:04:29.229 --> 00:04:33.801
+output is close to an even split in both the terminal and the chart.
+
+00:04:34.181 --> 00:04:38.841
+This is an ideal local simulation, not a claim about a physical
+
+00:04:38.841 --> 00:04:41.559
+quantum processor. Real hardware introduces noise, calibration
+
+00:04:41.559 --> 00:04:43.889
+limits, queue time, and measurement error.
+
+00:04:43.889 --> 00:04:48.161
+The simulator is useful here because it isolates the circuit logic.
+
+00:04:48.541 --> 00:04:52.289
+The fixed seed, equal shot count, preserved source code, and
+
+00:04:52.289 --> 00:04:54.538
+recorded outputs make the lesson reproducible.
+
+00:04:54.538 --> 00:04:57.912
+Someone using the same environment can inspect the circuit
+
+00:04:57.912 --> 00:05:01.286
+definitions, rerun the command, and compare the same three
+
+00:05:01.286 --> 00:05:02.036
+measurement patterns.
+
+00:05:02.416 --> 00:05:06.189
+To summarize, the approach was to hold the simulator and shot count
+
+00:05:06.189 --> 00:05:08.391
+constant while changing only the state preparation.
+
+00:05:08.391 --> 00:05:10.907
+The challenge was interpreting the small sampling difference
+
+00:05:10.907 --> 00:05:13.423
+correctly instead of treating it as an error.
+
+00:05:13.423 --> 00:05:16.882
+The terminal counts and comparison chart confirm the quality of the
+
+00:05:16.882 --> 00:05:17.196
+result.
+
+00:05:17.576 --> 00:05:22.059
+Lesson One gives us three anchor points: certain zero, certain one,
+
+00:05:22.059 --> 00:05:26.541
+and equal probability. In Lesson Two, we will replace the fixed
+
+00:05:26.541 --> 00:05:30.208
+Hadamard preparation with a parameterized rotation and watch the
+
+00:05:30.208 --> 00:05:32.653
+probability change continuously with the angle.
+
+00:05:33.033 --> 00:05:36.932
+That completes Lesson One of Renaissance Field Lite's Introduction
+
+00:05:36.932 --> 00:05:40.831
+to Quantum Computing: real code, measured outputs, and one verified
+
+00:05:40.831 --> 00:05:45.511
+concept at a time. The runnable Lesson One code is linked below.
+
+00:05:45.511 --> 00:05:49.410
+Follow Renaissance Field Lite for all twelve Codex 67 lessons.
