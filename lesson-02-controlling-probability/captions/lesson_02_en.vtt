@@ -1,0 +1,343 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.851
+Welcome to Lesson Two of Renaissance Field Lite's Introduction to
+
+00:00:03.851 --> 00:00:07.352
+Quantum Computing. In Lesson One, we compared certain zero, certain
+
+00:00:07.352 --> 00:00:10.852
+one, and equal superposition. Now we replace those fixed anchor
+
+00:00:10.852 --> 00:00:15.053
+states with a controllable R Y rotation and watch the probability of
+
+00:00:15.053 --> 00:00:17.504
+measuring one change smoothly with the angle.
+
+00:00:17.884 --> 00:00:20.306
+Lesson One gave us three anchor points.
+
+00:00:20.306 --> 00:00:23.767
+Zero degrees corresponds to certain zero, ninety degrees gives the
+
+00:00:23.767 --> 00:00:26.881
+familiar near fifty-fifty measurement pattern, and one hundred
+
+00:00:26.881 --> 00:00:28.958
+eighty degrees corresponds to certain one.
+
+00:00:28.958 --> 00:00:33.110
+The new question is what happens at the angles between those points.
+
+00:00:33.490 --> 00:00:36.826
+The objective is to calculate the expected probability for each
+
+00:00:36.826 --> 00:00:40.828
+angle, run seven one-qubit circuits for one thousand shots each, and
+
+00:00:40.828 --> 00:00:43.497
+compare the measured frequencies with the theoretical curve.
+
+00:00:43.497 --> 00:00:47.499
+We hold the simulator, seed, and shot count constant so the rotation
+
+00:00:47.499 --> 00:00:49.500
+angle is the only controlled change.
+
+00:00:49.880 --> 00:00:55.461
+The R Y gate rotates the qubit state around the Y axis by an angle
+
+00:00:55.461 --> 00:00:59.181
+theta. At theta equals zero, the state remains ket zero.
+
+00:00:59.181 --> 00:01:02.529
+As theta increases, more measurement probability moves toward one.
+
+00:01:02.529 --> 00:01:06.994
+At theta equals pi, or one hundred eighty degrees, the state reaches
+
+00:01:06.994 --> 00:01:07.738
+ket one.
+
+00:01:08.118 --> 00:01:11.729
+For this circuit, the expected probability of measuring one is sine
+
+00:01:11.729 --> 00:01:15.997
+squared of theta over two. We do not need a full derivation yet.
+
+00:01:15.997 --> 00:01:19.937
+The practical point is that the formula maps each rotation angle to
+
+00:01:19.937 --> 00:01:21.578
+a specific expected measurement frequency.
+
+00:01:21.958 --> 00:01:25.417
+Before running the code, we can predict three checkpoints.
+
+00:01:25.417 --> 00:01:28.876
+At zero degrees, the probability of one is zero.
+
+00:01:28.876 --> 00:01:31.566
+At ninety degrees, it is one half.
+
+00:01:31.566 --> 00:01:34.640
+At one hundred eighty degrees, it is one.
+
+00:01:34.640 --> 00:01:38.483
+These predictions let us verify the sweep before examining the
+
+00:01:38.483 --> 00:01:39.252
+intermediate angles.
+
+00:01:39.632 --> 00:01:43.859
+The source sets shots to one thousand, fixes the simulator seed at
+
+00:01:43.859 --> 00:01:47.733
+sixty-seven, and defines seven angles from zero through pi in
+
+00:01:47.733 --> 00:01:50.904
+thirty-degree steps. Using one shared list prevents accidental
+
+00:01:50.904 --> 00:01:54.074
+changes between the theoretical calculation and the circuits that
+
+00:01:54.074 --> 00:01:55.131
+are actually executed.
+
+00:01:55.511 --> 00:01:59.929
+The circuit builder creates one qubit, applies R Y with the supplied
+
+00:01:59.929 --> 00:02:01.770
+angle, and measures the result.
+
+00:02:01.770 --> 00:02:03.979
+No other gate changes between experiments.
+
+00:02:03.979 --> 00:02:08.029
+This makes the lesson a clean parameter sweep rather than seven
+
+00:02:08.029 --> 00:02:09.133
+unrelated circuit examples.
+
+00:02:09.513 --> 00:02:13.305
+The main function builds all seven circuits, executes them together
+
+00:02:13.305 --> 00:02:17.096
+with the Statevector Sampler, and then processes the results in
+
+00:02:17.096 --> 00:02:20.888
+matching order. For each angle, observed probability is the number
+
+00:02:20.888 --> 00:02:24.680
+of ones divided by one thousand, while expected probability comes
+
+00:02:24.680 --> 00:02:26.576
+from the sine-squared formula.
+
+00:02:26.956 --> 00:02:31.821
+Now we execute the preserved Lesson Two Python file in the local
+
+00:02:31.821 --> 00:02:35.471
+Qiskit environment. The output table places the angle, theoretical
+
+00:02:35.471 --> 00:02:39.931
+probability, measured probability, and raw counts on the same row so
+
+00:02:39.931 --> 00:02:42.363
+every prediction can be checked directly.
+
+00:02:42.743 --> 00:02:46.477
+At zero degrees, expected probability of one is zero, observed
+
+00:02:46.477 --> 00:02:50.211
+probability is zero, and all one thousand measurements are zero.
+
+00:02:50.211 --> 00:02:54.317
+This is the unchanged starting state and the first exact endpoint
+
+00:02:54.317 --> 00:02:54.691
+check.
+
+00:02:55.071 --> 00:02:59.121
+At thirty degrees, the expected probability of one is about six
+
+00:02:59.121 --> 00:03:02.804
+point seven percent. The simulation returns seventy ones, or seven
+
+00:03:02.804 --> 00:03:06.854
+percent. The observed value differs by only three tenths of one
+
+00:03:06.854 --> 00:03:07.591
+percentage point.
+
+00:03:07.971 --> 00:03:11.931
+At sixty degrees, the expected probability is twenty-five percent.
+
+00:03:11.931 --> 00:03:16.684
+The run produces two hundred forty-eight ones, or twenty-four point
+
+00:03:16.684 --> 00:03:20.248
+eight percent. Again, finite sampling shifts the exact count
+
+00:03:20.248 --> 00:03:22.625
+slightly while preserving the predicted probability.
+
+00:03:23.005 --> 00:03:25.836
+At ninety degrees, the formula predicts one half.
+
+00:03:25.836 --> 00:03:29.728
+The run produces four hundred ninety-three ones and five hundred
+
+00:03:29.728 --> 00:03:34.328
+seven zeros. This is the same seeded near-even split seen in Lesson
+
+00:03:34.328 --> 00:03:37.867
+One, now located as the midpoint of a continuous rotation.
+
+00:03:38.247 --> 00:03:42.091
+At one hundred twenty degrees, expected probability is seventy-five
+
+00:03:42.091 --> 00:03:46.319
+percent. The run produces seven hundred fifty ones and two hundred
+
+00:03:46.319 --> 00:03:50.163
+fifty zeros, matching the theoretical value exactly in this seeded
+
+00:03:50.163 --> 00:03:50.547
+sample.
+
+00:03:50.927 --> 00:03:53.999
+At one hundred fifty degrees, expected probability is about
+
+00:03:53.999 --> 00:03:55.706
+ninety-three point three percent.
+
+00:03:55.706 --> 00:03:59.461
+The run produces nine hundred thirty-nine ones, or ninety-three
+
+00:03:59.461 --> 00:04:03.898
+point nine percent. The state is close to certain one but has not
+
+00:04:03.898 --> 00:04:05.264
+yet reached the endpoint.
+
+00:04:05.644 --> 00:04:09.009
+At one hundred eighty degrees, expected and observed probability
+
+00:04:09.009 --> 00:04:12.374
+both equal one. All one thousand measurements are one.
+
+00:04:12.374 --> 00:04:16.860
+The sweep has moved continuously from the original zero state to the
+
+00:04:16.860 --> 00:04:18.356
+opposite computational basis state.
+
+00:04:18.736 --> 00:04:23.103
+The chart shows the theoretical sine-squared curve and the seven
+
+00:04:23.103 --> 00:04:24.294
+measured frequencies together.
+
+00:04:24.294 --> 00:04:29.059
+The observed points track the expected values from zero to one, with
+
+00:04:29.059 --> 00:04:32.632
+only small finite-sample differences at the non-deterministic
+
+00:04:32.632 --> 00:04:33.029
+angles.
+
+00:04:33.409 --> 00:04:35.203
+The verification has three parts.
+
+00:04:35.203 --> 00:04:38.792
+Both endpoints are exact, the ninety-degree midpoint is near
+
+00:04:38.792 --> 00:04:42.022
+fifty-fifty, and each intermediate measurement frequency stays close
+
+00:04:42.022 --> 00:04:44.534
+to the value calculated from the formula.
+
+00:04:44.534 --> 00:04:48.122
+Together, these checks confirm that the code and the probability
+
+00:04:48.122 --> 00:04:48.840
+model agree.
+
+00:04:49.220 --> 00:04:52.997
+A probability of twenty-five percent does not guarantee exactly two
+
+00:04:52.997 --> 00:04:56.088
+hundred fifty ones in every one-thousand-shot run.
+
+00:04:56.088 --> 00:04:58.491
+The measured count is a finite sample.
+
+00:04:58.491 --> 00:05:02.269
+Changing the seed can change the exact numbers, while repeated runs
+
+00:05:02.269 --> 00:05:04.672
+still cluster around the same theoretical curve.
+
+00:05:05.052 --> 00:05:07.415
+This is an ideal local simulation.
+
+00:05:07.415 --> 00:05:11.353
+A physical quantum processor can add gate errors, readout errors,
+
+00:05:11.353 --> 00:05:13.323
+calibration drift, and device constraints.
+
+00:05:13.323 --> 00:05:18.048
+The simulator is appropriate here because the goal is to isolate how
+
+00:05:18.048 --> 00:05:21.593
+the R Y angle controls the intended measurement probability.
+
+00:05:21.973 --> 00:05:25.759
+The result is reproducible because the source is preserved, the seed
+
+00:05:25.759 --> 00:05:29.546
+is fixed at sixty-seven, every angle uses exactly one thousand
+
+00:05:29.546 --> 00:05:32.988
+shots, and the raw counts are recorded beside the theoretical
+
+00:05:32.988 --> 00:05:36.774
+values. Another user can rerun the same file and inspect the
+
+00:05:36.774 --> 00:05:37.463
+complete comparison.
+
+00:05:37.843 --> 00:05:41.792
+Lesson Two shows how one gate controls a single-qubit probability
+
+00:05:41.792 --> 00:05:45.022
+distribution. In Lesson Three, we add a second qubit.
+
+00:05:45.022 --> 00:05:48.971
+A Hadamard gate creates the probability split, and a controlled X
+
+00:05:48.971 --> 00:05:52.202
+gate turns that split into correlated two-qubit outcomes.
+
+00:05:52.582 --> 00:05:56.137
+That completes Lesson Two of Renaissance Field Lite's Introduction
+
+00:05:56.137 --> 00:06:00.047
+to Quantum Computing. We used real code, measured output, and a
+
+00:06:00.047 --> 00:06:03.957
+theoretical curve to verify probability control with the R Y gate.
+
+00:06:03.957 --> 00:06:06.801
+The runnable Lesson Two code is linked below.
+
+00:06:06.801 --> 00:06:10.356
+Follow Renaissance Field Lite and Codex 67 for the full
+
+00:06:10.356 --> 00:06:11.422
+twelve-lesson series.

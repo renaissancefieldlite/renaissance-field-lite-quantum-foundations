@@ -1,0 +1,5 @@
+Lesson 05 — Why shot count matters
+shots | count(1) | observed_P(1) | absolute_error_from_0.5
+  100 |       44 |        0.4400 | 0.0600
+ 1000 |      493 |        0.4930 | 0.0070
+10000 |     4971 |        0.4971 | 0.0029

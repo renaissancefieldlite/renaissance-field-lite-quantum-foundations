@@ -1,0 +1,419 @@
+1
+00:00:00,000 --> 00:00:03,962
+Welcome to Lesson Three of Renaissance Field Lite's Introduction to
+
+2
+00:00:03,962 --> 00:00:07,203
+Quantum Computing. Lessons One and Two established superposition and
+
+3
+00:00:07,203 --> 00:00:09,004
+controllable probability on one qubit.
+
+4
+00:00:09,004 --> 00:00:14,406
+Now we add a second qubit and use a controlled gate to create a Bell
+
+5
+00:00:14,406 --> 00:00:16,567
+pair with perfectly correlated ideal measurements.
+
+6
+00:00:16,947 --> 00:00:18,740
+The construction has three steps.
+
+7
+00:00:18,740 --> 00:00:21,608
+Hadamard prepares the first qubit in equal superposition.
+
+8
+00:00:21,608 --> 00:00:26,627
+C not uses that qubit as the control and the second qubit as the
+
+9
+00:00:26,627 --> 00:00:29,496
+target. Measurement then reveals two allowed correlated outcomes:
+
+10
+00:00:29,496 --> 00:00:31,288
+zero zero and one one.
+
+11
+00:00:31,668 --> 00:00:35,839
+The objective is to build a two-qubit Bell-state circuit, predict
+
+12
+00:00:35,839 --> 00:00:38,619
+the allowed measurement strings, execute one thousand local
+
+13
+00:00:38,619 --> 00:00:42,095
+simulator shots, and verify that every observed outcome is matched.
+
+14
+00:00:42,095 --> 00:00:46,266
+We will also state clearly what this result does and does not
+
+15
+00:00:46,266 --> 00:00:46,613
+establish.
+
+16
+00:00:46,993 --> 00:00:50,891
+Two measured qubits can produce four classical bit strings: zero
+
+17
+00:00:50,891 --> 00:00:54,009
+zero, zero one, one zero, and one one.
+
+18
+00:00:54,009 --> 00:00:57,907
+The Bell circuit does not make all four equally likely.
+
+19
+00:00:57,907 --> 00:01:01,416
+Its gate sequence creates a very specific correlation structure.
+
+20
+00:01:01,796 --> 00:01:05,821
+In the controlled X operation, qubit zero is the control and qubit
+
+21
+00:01:05,821 --> 00:01:10,518
+one is the target. The target flips only when the control is in the
+
+22
+00:01:10,518 --> 00:01:14,879
+one branch. If the control is in the zero branch, the target remains
+
+23
+00:01:14,879 --> 00:01:15,215
+unchanged.
+
+24
+00:01:15,595 --> 00:01:18,628
+The circuit applies Hadamard to qubit zero first.
+
+25
+00:01:18,628 --> 00:01:21,282
+That creates equal zero and one branches.
+
+26
+00:01:21,282 --> 00:01:25,074
+Controlled X then links qubit one to the control branch.
+
+27
+00:01:25,074 --> 00:01:28,486
+Finally, both qubits are measured in the computational basis.
+
+28
+00:01:28,866 --> 00:01:31,629
+The ideal state is called Bell phi plus.
+
+29
+00:01:31,629 --> 00:01:36,464
+It is written as zero zero plus one one, divided by the square root
+
+30
+00:01:36,464 --> 00:01:40,264
+of two. This means the joint state contains the two matched
+
+31
+00:01:40,264 --> 00:01:43,026
+possibilities with equal amplitude, rather than four independent
+
+32
+00:01:43,026 --> 00:01:43,372
+combinations.
+
+33
+00:01:43,752 --> 00:01:47,082
+The preserved source again uses one thousand shots and seed
+
+34
+00:01:47,082 --> 00:01:50,413
+sixty-seven. Keeping the same simulation settings lets us compare
+
+35
+00:01:50,413 --> 00:01:53,410
+this lesson directly with the earlier seeded fifty-fifty
+
+36
+00:01:53,410 --> 00:01:54,410
+single-qubit result.
+
+37
+00:01:54,790 --> 00:01:58,503
+The builder allocates two qubits, applies Hadamard to qubit zero,
+
+38
+00:01:58,503 --> 00:02:02,588
+applies controlled X from qubit zero to qubit one, and measures
+
+39
+00:02:02,588 --> 00:02:06,673
+both. The entire Bell-state preparation is visible in two gate
+
+40
+00:02:06,673 --> 00:02:07,044
+lines.
+
+41
+00:02:07,424 --> 00:02:10,829
+The main function executes the circuit, collects the two-bit
+
+42
+00:02:10,829 --> 00:02:14,574
+measurement counts, and adds the zero-zero and one-one totals.
+
+43
+00:02:14,574 --> 00:02:17,979
+Dividing that sum by one thousand produces the matched percentage
+
+44
+00:02:17,979 --> 00:02:20,362
+used as the lesson's acceptance check.
+
+45
+00:02:20,742 --> 00:02:23,033
+Before executing, the prediction is specific.
+
+46
+00:02:23,033 --> 00:02:27,616
+Zero zero and one one should each appear near half the time.
+
+47
+00:02:27,616 --> 00:02:32,962
+Zero one and one zero should not appear at all in this ideal model.
+
+48
+00:02:32,962 --> 00:02:37,545
+The exact split between the two allowed strings can vary with finite
+
+49
+00:02:37,545 --> 00:02:37,927
+sampling.
+
+50
+00:02:38,307 --> 00:02:42,593
+Now we run the preserved Lesson Three Python file in the same local
+
+51
+00:02:42,593 --> 00:02:45,891
+Qiskit environment. The output prints the text circuit diagram, the
+
+52
+00:02:45,891 --> 00:02:49,518
+raw two-bit counts, and the percentage of outcomes where both
+
+53
+00:02:49,518 --> 00:02:50,507
+measured bits agree.
+
+54
+00:02:50,887 --> 00:02:53,630
+The printed circuit confirms the intended structure.
+
+55
+00:02:53,630 --> 00:02:57,940
+Qubit zero passes through Hadamard, then controls the X operation on
+
+56
+00:02:57,940 --> 00:03:01,466
+qubit one. Both measurement boxes appear after the entangling
+
+57
+00:03:01,466 --> 00:03:05,776
+operation, so the terminal output is tied to the correct circuit.
+
+58
+00:03:06,156 --> 00:03:10,120
+The measured counts are five hundred seven zero-zero outcomes and
+
+59
+00:03:10,120 --> 00:03:12,643
+four hundred ninety-three one-one outcomes.
+
+60
+00:03:12,643 --> 00:03:15,526
+Zero one and one zero do not appear.
+
+61
+00:03:15,526 --> 00:03:18,409
+The allowed pair totals one thousand shots exactly.
+
+62
+00:03:18,789 --> 00:03:22,036
+Adding the two allowed counts gives one thousand matched outcomes
+
+63
+00:03:22,036 --> 00:03:25,608
+out of one thousand shots. The matched percentage is therefore one
+
+64
+00:03:25,608 --> 00:03:27,556
+hundred percent in this ideal simulation.
+
+65
+00:03:27,556 --> 00:03:30,478
+That is the direct acceptance result for the lesson.
+
+66
+00:03:30,858 --> 00:03:33,555
+The chart makes the result immediately visible.
+
+67
+00:03:33,555 --> 00:03:37,792
+Zero zero and one one carry all measured counts, while both
+
+68
+00:03:37,792 --> 00:03:39,719
+mismatched categories remain at zero.
+
+69
+00:03:39,719 --> 00:03:43,571
+The distribution is random between the two allowed results but
+
+70
+00:03:43,571 --> 00:03:45,497
+perfectly constrained by their relationship.
+
+71
+00:03:45,877 --> 00:03:49,214
+Each shot still produces a random choice between the two allowed
+
+72
+00:03:49,214 --> 00:03:52,550
+strings. The key quantum structure is not that one fixed string
+
+73
+00:03:52,550 --> 00:03:55,887
+always appears. It is that the two measurement results agree every
+
+74
+00:03:55,887 --> 00:03:57,404
+time in the ideal model.
+
+75
+00:03:57,784 --> 00:04:01,733
+If the two qubits were merely independent fifty-fifty random bits,
+
+76
+00:04:01,733 --> 00:04:04,964
+all four strings would appear near twenty-five percent.
+
+77
+00:04:04,964 --> 00:04:08,554
+The Bell circuit instead concentrates all probability on the two
+
+78
+00:04:08,554 --> 00:04:11,785
+matched strings. That difference is the correlation we are
+
+79
+00:04:11,785 --> 00:04:12,144
+verifying.
+
+80
+00:04:12,524 --> 00:04:16,123
+The verification is direct. The raw counts total one thousand, only
+
+81
+00:04:16,123 --> 00:04:19,396
+the two predicted matched strings appear, and the matched percentage
+
+82
+00:04:19,396 --> 00:04:22,995
+is one hundred percent. The printed circuit also confirms that the
+
+83
+00:04:22,995 --> 00:04:25,940
+measured result came from Hadamard followed by controlled X.
+
+84
+00:04:26,320 --> 00:04:30,781
+This demonstration is not by itself a Bell-inequality experiment, a
+
+85
+00:04:30,781 --> 00:04:34,431
+test of locality, or evidence from physical quantum hardware.
+
+86
+00:04:34,431 --> 00:04:38,081
+It establishes the ideal circuit behavior: the selected gate
+
+87
+00:04:38,081 --> 00:04:40,920
+sequence creates the predicted correlated measurement distribution.
+
+88
+00:04:41,300 --> 00:04:45,286
+On real hardware, gate error, readout error, connectivity, and
+
+89
+00:04:45,286 --> 00:04:47,500
+calibration can introduce mismatched counts.
+
+90
+00:04:47,500 --> 00:04:51,042
+Those effects become useful subjects for later experiments.
+
+91
+00:04:51,042 --> 00:04:55,471
+Here, the ideal simulator isolates the intended Bell-state circuit
+
+92
+00:04:55,471 --> 00:04:57,242
+before adding device noise.
+
+93
+00:04:57,622 --> 00:05:01,693
+The result is reproducible because the exact source is preserved,
+
+94
+00:05:01,693 --> 00:05:06,579
+the seed and shot count are fixed, and the evidence includes the
+
+95
+00:05:06,579 --> 00:05:10,244
+printed circuit, raw counts, matched calculation, and visual chart.
+
+96
+00:05:10,244 --> 00:05:13,501
+Each artifact describes the same measured state path.
+
+97
+00:05:13,881 --> 00:05:15,622
+Lesson Three correlates two qubits.
+
+98
+00:05:15,622 --> 00:05:19,105
+In Lesson Four, we extend the same pattern to three.
+
+99
+00:05:19,105 --> 00:05:23,981
+One Hadamard and two controlled X gates create a G H Z state whose
+
+100
+00:05:23,981 --> 00:05:27,464
+ideal measurements are zero zero zero and one one one.
+
+101
+00:05:27,844 --> 00:05:31,598
+That completes Lesson Three of Renaissance Field Lite's Introduction
+
+102
+00:05:31,598 --> 00:05:35,727
+to Quantum Computing. We combined Hadamard and C not, measured a
+
+103
+00:05:35,727 --> 00:05:39,105
+real local simulation, and verified one hundred percent matched
+
+104
+00:05:39,105 --> 00:05:42,484
+outcomes. The runnable Lesson Three code is linked below.
+
+105
+00:05:42,484 --> 00:05:46,613
+Follow Renaissance Field Lite and Codex 67 for the complete series.

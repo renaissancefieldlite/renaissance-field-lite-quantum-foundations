@@ -1,0 +1,289 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.726
+Welcome to Lesson Four of Renaissance Field Lite's Introduction to
+
+00:00:03.726 --> 00:00:07.453
+Quantum Computing. We are scaling the Bell-pair pattern from two
+
+00:00:07.453 --> 00:00:11.856
+qubits to three, creating a G H Z state and verifying its measured
+
+00:00:11.856 --> 00:00:13.889
+correlation with one thousand simulator shots.
+
+00:00:14.269 --> 00:00:17.858
+Lesson Three used Hadamard and CNOT to correlate two qubits.
+
+00:00:17.858 --> 00:00:22.525
+Here we keep that structure, add a third qubit, and connect it with
+
+00:00:22.525 --> 00:00:26.473
+a second CNOT. The circuit grows, but the reasoning stays traceable.
+
+00:00:26.853 --> 00:00:28.654
+Our objective has three parts.
+
+00:00:28.654 --> 00:00:32.978
+We will build the three-qubit circuit, predict the only two valid
+
+00:00:32.978 --> 00:00:36.941
+ideal outcomes, and verify that every measured bit string is fully
+
+00:00:36.941 --> 00:00:38.742
+matched across all three qubits.
+
+00:00:39.122 --> 00:00:42.193
+Three measured qubits can produce eight classical strings, from
+
+00:00:42.193 --> 00:00:44.581
+zero-zero-zero through one-one-one.
+
+00:00:44.581 --> 00:00:48.675
+The G H Z circuit does not spread probability across all eight.
+
+00:00:48.675 --> 00:00:52.428
+In the ideal model, it supports only the two fully aligned
+
+00:00:52.428 --> 00:00:52.770
+endpoints.
+
+00:00:53.150 --> 00:00:56.777
+The gate order matters. Hadamard first creates equal amplitude on
+
+00:00:56.777 --> 00:01:00.766
+qubit zero. The first CNOT correlates qubit one with that branch,
+
+00:01:00.766 --> 00:01:05.118
+and the second CNOT carries the same branch structure from qubit one
+
+00:01:05.118 --> 00:01:06.206
+to qubit two.
+
+00:01:06.586 --> 00:01:10.912
+The ideal state is the equal superposition of zero-zero-zero and
+
+00:01:10.912 --> 00:01:14.517
+one-one-one. Each supported branch has one-half measurement
+
+00:01:14.517 --> 00:01:17.761
+probability. This formula predicts the output pattern before we
+
+00:01:17.761 --> 00:01:18.843
+execute any code.
+
+00:01:19.223 --> 00:01:21.972
+A useful mental model is branch propagation.
+
+00:01:21.972 --> 00:01:23.936
+Hadamard creates the two branches.
+
+00:01:23.936 --> 00:01:27.864
+The first controlled X aligns qubit one with qubit zero.
+
+00:01:27.864 --> 00:01:32.577
+The second aligns qubit two with qubit one, producing a three-bit
+
+00:01:32.577 --> 00:01:33.362
+shared outcome.
+
+00:01:33.742 --> 00:01:37.023
+The source imports Quantum Circuit and Statevector Sampler.
+
+00:01:37.023 --> 00:01:41.943
+The shot count stays fixed at one thousand, and seed sixty-seven
+
+00:01:41.943 --> 00:01:45.633
+preserves reproducibility. Those constants let us compare the new
+
+00:01:45.633 --> 00:01:48.503
+circuit structure without changing the measurement contract.
+
+00:01:48.882 --> 00:01:50.668
+The builder allocates three qubits.
+
+00:01:50.668 --> 00:01:55.311
+Hadamard acts on qubit zero, then CNOT connects zero to one and one
+
+00:01:55.311 --> 00:01:59.597
+to two. Measurement is added only after the complete gate chain, so
+
+00:01:59.597 --> 00:02:01.740
+all three outputs are sampled together.
+
+00:02:02.120 --> 00:02:05.882
+The main function executes one circuit for one thousand shots and
+
+00:02:05.882 --> 00:02:08.960
+reads the measured counts. The matched total adds only
+
+00:02:08.960 --> 00:02:11.355
+zero-zero-zero and one-one-one.
+
+00:02:11.355 --> 00:02:14.433
+Any other string would violate the ideal acceptance condition.
+
+00:02:14.813 --> 00:02:18.474
+Before running, I predict roughly five hundred zero-zero-zero
+
+00:02:18.474 --> 00:02:21.403
+outcomes and five hundred one-one-one outcomes.
+
+00:02:21.403 --> 00:02:25.065
+Finite sampling can shift the split slightly, but every other
+
+00:02:25.065 --> 00:02:28.726
+three-bit string should remain absent in this ideal simulation.
+
+00:02:29.106 --> 00:02:33.103
+Now we execute the unchanged lesson source in the local Qiskit
+
+00:02:33.103 --> 00:02:36.737
+environment. The terminal prints the three-wire circuit, the count
+
+00:02:36.737 --> 00:02:39.280
+dictionary, and the fully matched acceptance rate.
+
+00:02:39.660 --> 00:02:42.634
+The circuit diagram confirms the intended gate order.
+
+00:02:42.634 --> 00:02:46.352
+Qubit zero carries Hadamard, the first control reaches qubit one,
+
+00:02:46.352 --> 00:02:48.954
+and the second control reaches qubit two.
+
+00:02:48.954 --> 00:02:52.299
+All three measurement blocks appear after the correlation chain.
+
+00:02:52.679 --> 00:02:56.713
+The measured result is five hundred seven zero-zero-zero outcomes
+
+00:02:56.713 --> 00:03:00.013
+and four hundred ninety-three one-one-one outcomes.
+
+00:03:00.013 --> 00:03:04.046
+That is the same seeded split seen in the earlier equal
+
+00:03:04.046 --> 00:03:06.613
+superposition, now propagated across three measured qubits.
+
+00:03:06.993 --> 00:03:08.909
+All three acceptance checks pass.
+
+00:03:08.909 --> 00:03:12.741
+The counts total one thousand, only the two predicted strings
+
+00:03:12.741 --> 00:03:16.573
+appear, and the fully matched rate is one hundred percent.
+
+00:03:16.573 --> 00:03:19.638
+The measured evidence matches the circuit-level prediction.
+
+00:03:20.018 --> 00:03:23.412
+The chart displays all eight computational-basis strings, not just
+
+00:03:23.412 --> 00:03:27.145
+the two observed values. This makes the structure visible: only the
+
+00:03:27.145 --> 00:03:30.878
+first and last bars rise, while the six intermediate outcomes remain
+
+00:03:30.878 --> 00:03:31.557
+at zero.
+
+00:03:31.937 --> 00:03:35.731
+The individual branch remains probabilistic, but the three bits are
+
+00:03:35.731 --> 00:03:39.905
+not independent. Once a shot resolves to one branch, all three
+
+00:03:39.905 --> 00:03:43.699
+measured bits agree. The useful feature is the shared global
+
+00:03:43.699 --> 00:03:44.078
+pattern.
+
+00:03:44.458 --> 00:03:48.301
+Adding one qubit doubles the number of possible basis strings from
+
+00:03:48.301 --> 00:03:52.843
+four to eight. Yet the ideal G H Z circuit preserves a compact
+
+00:03:52.843 --> 00:03:56.337
+two-outcome pattern. This contrast is why scaling circuit structure
+
+00:03:56.337 --> 00:03:56.686
+matters.
+
+00:03:57.066 --> 00:04:01.133
+Verification joins four surfaces: the source code, printed diagram,
+
+00:04:01.133 --> 00:04:03.392
+measured counts, and acceptance calculation.
+
+00:04:03.392 --> 00:04:08.813
+All four describe the same H, CNOT, CNOT structure and the same
+
+00:04:08.813 --> 00:04:10.169
+fully correlated output.
+
+00:04:10.549 --> 00:04:13.948
+This lesson establishes the expected behavior in an ideal
+
+00:04:13.948 --> 00:04:17.347
+statevector simulation. It does not measure hardware fidelity or
+
+00:04:17.347 --> 00:04:19.613
+prove a device-level entanglement benchmark.
+
+00:04:19.613 --> 00:04:23.012
+Those require separate noise-aware and physical-hardware validation.
+
+00:04:23.392 --> 00:04:27.275
+On physical hardware, imperfect controlled gates, readout error, and
+
+00:04:27.275 --> 00:04:29.432
+decoherence can introduce unsupported outcomes.
+
+00:04:29.432 --> 00:04:33.746
+The ideal result therefore becomes a reference pattern for later
+
+00:04:33.746 --> 00:04:37.629
+hardware comparison rather than a promise of perfect device
+
+00:04:37.629 --> 00:04:38.060
+behavior.
+
+00:04:38.440 --> 00:04:41.326
+Reproducibility depends on more than a screenshot.
+
+00:04:41.326 --> 00:04:45.449
+We preserve the exact source hash, seed, shot count, terminal
+
+00:04:45.449 --> 00:04:49.572
+output, chart, captions, and release manifest so the public code
+
+00:04:49.572 --> 00:04:52.458
+package can recreate the same lesson path.
+
+00:04:52.838 --> 00:04:56.625
+Lesson Five returns to a single Hadamard circuit and changes only
+
+00:04:56.625 --> 00:05:00.413
+the number of shots. That lets us isolate finite-sample statistics
+
+00:05:00.413 --> 00:05:04.200
+and see how a probability estimate steadies as the measurement count
+
+00:05:04.200 --> 00:05:04.545
+increases.
+
+00:05:04.925 --> 00:05:09.192
+That completes Lesson Four. The runnable G H Z code and measured
+
+00:05:09.192 --> 00:05:12.749
+results are linked below. Follow Renaissance Field Lite and Codex
+
+00:05:12.749 --> 00:05:16.305
+Sixty-Seven for the full twelve-lesson Quantum Foundations series.

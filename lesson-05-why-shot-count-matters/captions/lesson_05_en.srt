@@ -1,0 +1,367 @@
+1
+00:00:00,000 --> 00:00:03,523
+Welcome to Lesson Five of Renaissance Field Lite's Introduction to
+
+2
+00:00:03,523 --> 00:00:06,725
+Quantum Computing. We are keeping the circuit fixed and changing
+
+3
+00:00:06,725 --> 00:00:10,888
+only the shot count, so we can see how finite sampling affects a
+
+4
+00:00:10,888 --> 00:00:11,849
+measured probability estimate.
+
+5
+00:00:12,229 --> 00:00:16,189
+Lesson Four changed the circuit size and studied a three-qubit
+
+6
+00:00:16,189 --> 00:00:19,789
+correlation pattern. This lesson returns to one qubit and changes
+
+7
+00:00:19,789 --> 00:00:21,949
+only the number of repeated measurements.
+
+8
+00:00:21,949 --> 00:00:24,469
+That isolates the statistics of the estimate.
+
+9
+00:00:24,849 --> 00:00:28,847
+Our objective is to measure the same equal-superposition circuit at
+
+10
+00:00:28,847 --> 00:00:32,481
+three sample sizes, calculate the observed probability of one, and
+
+11
+00:00:32,481 --> 00:00:36,116
+compare each estimate with the theoretical value of one half.
+
+12
+00:00:36,496 --> 00:00:40,549
+We will compare one hundred, one thousand, and ten thousand shots.
+
+13
+00:00:40,549 --> 00:00:43,865
+A shot is one circuit execution followed by measurement.
+
+14
+00:00:43,865 --> 00:00:47,181
+More shots provide more samples from the same underlying
+
+15
+00:00:47,181 --> 00:00:47,549
+distribution.
+
+16
+00:00:47,929 --> 00:00:52,270
+The sample estimate, called p hat of one, is the count of measured
+
+17
+00:00:52,270 --> 00:00:54,274
+ones divided by the total shots.
+
+18
+00:00:54,274 --> 00:00:57,947
+For a Hadamard applied to zero, the theoretical probability is one
+
+19
+00:00:57,947 --> 00:00:58,281
+half.
+
+20
+00:00:58,661 --> 00:01:02,328
+To compare sample quality, we calculate absolute error: the distance
+
+21
+00:01:02,328 --> 00:01:05,262
+between the observed estimate and zero point five.
+
+22
+00:01:05,262 --> 00:01:09,297
+A smaller value means the measured frequency landed closer to the
+
+23
+00:01:09,297 --> 00:01:10,030
+theoretical probability.
+
+24
+00:01:10,410 --> 00:01:12,667
+The imports match the previous lessons.
+
+25
+00:01:12,667 --> 00:01:16,805
+Seed sixty-seven is fixed for reproducibility, while the shot-count
+
+26
+00:01:16,805 --> 00:01:20,191
+list contains one hundred, one thousand, and ten thousand.
+
+27
+00:01:20,191 --> 00:01:22,824
+Those are the only changing run parameters.
+
+28
+00:01:23,204 --> 00:01:26,265
+The circuit itself is deliberately simple and unchanged.
+
+29
+00:01:26,265 --> 00:01:30,091
+One qubit starts at zero, Hadamard prepares equal superposition, and
+
+30
+00:01:30,091 --> 00:01:33,918
+measurement converts the quantum result into a classical zero or
+
+31
+00:01:33,918 --> 00:01:34,300
+one.
+
+32
+00:01:34,680 --> 00:01:38,721
+The main function builds the circuit once and prints a structured
+
+33
+00:01:38,721 --> 00:01:42,394
+comparison header. Each later row will report the shot count,
+
+34
+00:01:42,394 --> 00:01:45,700
+measured ones, observed probability, and absolute error from one
+
+35
+00:01:45,700 --> 00:01:46,068
+half.
+
+36
+00:01:46,448 --> 00:01:48,649
+The loop visits each shot count.
+
+37
+00:01:48,649 --> 00:01:52,317
+For each sample size, the seeded statevector sampler executes the
+
+38
+00:01:52,317 --> 00:01:54,885
+same circuit and returns a count dictionary.
+
+39
+00:01:54,885 --> 00:01:58,554
+This keeps the concept clean: sample size changes, circuit logic
+
+40
+00:01:58,554 --> 00:01:59,287
+does not.
+
+41
+00:01:59,667 --> 00:02:04,080
+The code extracts the count of ones, divides by the requested shots,
+
+42
+00:02:04,080 --> 00:02:07,389
+and takes the absolute difference from zero point five.
+
+43
+00:02:07,389 --> 00:02:11,433
+The formatted row then exposes every value used in the comparison.
+
+44
+00:02:11,813 --> 00:02:15,382
+Before execution, I expect all three estimates near one half.
+
+45
+00:02:15,382 --> 00:02:18,951
+The one-hundred-shot result should show the most visible
+
+46
+00:02:18,951 --> 00:02:22,520
+fluctuation, and the ten-thousand-shot result should provide the
+
+47
+00:02:22,520 --> 00:02:25,018
+tightest estimate in this preserved seeded run.
+
+48
+00:02:25,398 --> 00:02:29,565
+Now we execute the source. The terminal prints one row per shot
+
+49
+00:02:29,565 --> 00:02:33,037
+count, allowing us to compare the count of ones, observed
+
+50
+00:02:33,037 --> 00:02:34,773
+probability, and absolute error directly.
+
+51
+00:02:35,153 --> 00:02:38,644
+With one hundred shots, forty-four outcomes are one.
+
+52
+00:02:38,644 --> 00:02:42,524
+The observed probability is zero point four four, producing an
+
+53
+00:02:42,524 --> 00:02:45,239
+absolute error of zero point zero six.
+
+54
+00:02:45,239 --> 00:02:47,955
+This small sample shows the largest deviation.
+
+55
+00:02:48,335 --> 00:02:52,290
+With one thousand shots, four hundred ninety-three outcomes are one.
+
+56
+00:02:52,290 --> 00:02:56,245
+The observed probability is zero point four nine three, and the
+
+57
+00:02:56,245 --> 00:02:59,481
+absolute error falls to zero point zero zero seven.
+
+58
+00:02:59,861 --> 00:03:03,317
+With ten thousand shots, four thousand nine hundred seventy-one
+
+59
+00:03:03,317 --> 00:03:07,464
+outcomes are one. The estimate is zero point four nine seven one,
+
+60
+00:03:07,464 --> 00:03:11,611
+leaving an absolute error of only zero point zero zero two nine.
+
+61
+00:03:11,991 --> 00:03:15,998
+The chart puts the three absolute errors on a logarithmic shot-count
+
+62
+00:03:15,998 --> 00:03:20,006
+axis. In this run, the error drops from six hundredths to seven
+
+63
+00:03:20,006 --> 00:03:22,677
+thousandths and then to twenty-nine ten-thousandths.
+
+64
+00:03:23,057 --> 00:03:26,788
+More shots generally improve statistical precision and make repeated
+
+65
+00:03:26,788 --> 00:03:30,520
+estimates steadier. The tradeoff is cost: more circuit executions
+
+66
+00:03:30,520 --> 00:03:33,836
+require more simulator time or more hardware access.
+
+67
+00:03:33,836 --> 00:03:37,153
+Shot count is therefore an experimental design choice.
+
+68
+00:03:37,533 --> 00:03:41,550
+Seed sixty-seven lets us reproduce these exact simulator samples.
+
+69
+00:03:41,550 --> 00:03:45,166
+A different seed could produce different counts while remaining
+
+70
+00:03:45,166 --> 00:03:47,979
+consistent with the same one-half probability.
+
+71
+00:03:47,979 --> 00:03:51,595
+Reproducibility and statistical certainty are related, but they are
+
+72
+00:03:51,595 --> 00:03:52,399
+not identical.
+
+73
+00:03:52,779 --> 00:03:56,796
+The acceptance checks pass. Each run uses the requested number of
+
+74
+00:03:56,796 --> 00:04:00,814
+shots, all three probabilities remain near one half, and this seeded
+
+75
+00:04:00,814 --> 00:04:04,832
+sequence shows a clear reduction in absolute error as the sample
+
+76
+00:04:04,832 --> 00:04:05,197
+grows.
+
+77
+00:04:05,577 --> 00:04:09,577
+This preserved run shows a clean monotonic improvement, but we
+
+78
+00:04:09,577 --> 00:04:11,977
+should state the general rule carefully.
+
+79
+00:04:11,977 --> 00:04:14,777
+Larger samples reduce expected fluctuation across repeated
+
+80
+00:04:14,777 --> 00:04:18,778
+experiments. They do not guarantee that every larger sample beats
+
+81
+00:04:18,778 --> 00:04:19,978
+every smaller sample.
+
+82
+00:04:20,358 --> 00:04:23,339
+A practical shot count depends on the task.
+
+83
+00:04:23,339 --> 00:04:27,066
+Small samples are useful for quick debugging, one thousand shots
+
+84
+00:04:27,066 --> 00:04:30,420
+often gives an intuitive teaching distribution, and larger samples
+
+85
+00:04:30,420 --> 00:04:32,656
+are justified when tighter precision matters.
+
+86
+00:04:33,036 --> 00:04:36,492
+Lesson Six shifts from sampling statistics to framework portability.
+
+87
+00:04:36,492 --> 00:04:40,331
+We will express the same quantum idea through two software
+
+88
+00:04:40,331 --> 00:04:43,786
+development kits and compare whether the measured pattern remains
+
+89
+00:04:43,786 --> 00:04:44,170
+consistent.
+
+90
+00:04:44,550 --> 00:04:48,398
+That completes Lesson Five. The runnable sampling code and measured
+
+91
+00:04:48,398 --> 00:04:52,245
+results are linked below. Follow Renaissance Field Lite and Codex
+
+92
+00:04:52,245 --> 00:04:56,093
+Sixty-Seven for the full twelve-lesson Quantum Foundations series.

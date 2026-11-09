@@ -1,0 +1,56 @@
+{
+  "lesson": 2,
+  "shots": 1000,
+  "seed": 67,
+  "rows": [
+    {
+      "angle": 0,
+      "expected": 0.0,
+      "observed": 0.0,
+      "zero": 1000,
+      "one": 0
+    },
+    {
+      "angle": 30,
+      "expected": 0.067,
+      "observed": 0.07,
+      "zero": 930,
+      "one": 70
+    },
+    {
+      "angle": 60,
+      "expected": 0.25,
+      "observed": 0.248,
+      "zero": 752,
+      "one": 248
+    },
+    {
+      "angle": 90,
+      "expected": 0.5,
+      "observed": 0.493,
+      "zero": 507,
+      "one": 493
+    },
+    {
+      "angle": 120,
+      "expected": 0.75,
+      "observed": 0.75,
+      "zero": 250,
+      "one": 750
+    },
+    {
+      "angle": 150,
+      "expected": 0.933,
+      "observed": 0.939,
+      "zero": 61,
+      "one": 939
+    },
+    {
+      "angle": 180,
+      "expected": 1.0,
+      "observed": 1.0,
+      "zero": 0,
+      "one": 1000
+    }
+  ]
+}

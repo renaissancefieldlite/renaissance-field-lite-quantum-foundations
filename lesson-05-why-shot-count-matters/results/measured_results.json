@@ -1,0 +1,23 @@
+{
+  "rows": [
+    {
+      "count_one": 44,
+      "error": 0.06,
+      "observed": 0.44,
+      "shots": 100
+    },
+    {
+      "count_one": 493,
+      "error": 0.007,
+      "observed": 0.493,
+      "shots": 1000
+    },
+    {
+      "count_one": 4971,
+      "error": 0.0029,
+      "observed": 0.4971,
+      "shots": 10000
+    }
+  ],
+  "seed": 67
+}
